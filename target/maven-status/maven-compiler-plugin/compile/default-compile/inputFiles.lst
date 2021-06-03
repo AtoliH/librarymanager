@@ -1,0 +1,12 @@
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/dao/MembreDaoImpl.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/dao/LivreDao.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/utils/FillDatabase.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/dao/EmpruntDao.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/exception/DaoException.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/modele/Livre.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/dao/EmpruntDaoImpl.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/modele/Membre.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/dao/LivreDaoImpl.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/dao/MembreDao.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/modele/Emprunt.java
+/Users/Fire/Desktop/ENSTD/IN205/Projet2/src/main/java/com/ensta/librarymanager/persistence/ConnectionManager.java
