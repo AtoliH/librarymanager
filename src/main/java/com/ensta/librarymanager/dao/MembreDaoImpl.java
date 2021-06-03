@@ -16,7 +16,7 @@ public class MembreDaoImpl implements MembreDao {
 
     private static MembreDaoImpl instance;
 
-    public static MembreDaoImpl getInstance() throws SQLException {
+    public static MembreDaoImpl getInstance() throws DaoException {
         if (instance == null) {
             instance = new MembreDaoImpl();
         }
@@ -32,8 +32,12 @@ public class MembreDaoImpl implements MembreDao {
 
     private Connection connexion;
     
-    public MembreDaoImpl() throws SQLException {
-        connexion = ConnectionManager.getConnection();
+    public MembreDaoImpl() throws DaoException {
+        try {
+            connexion = ConnectionManager.getConnection();
+        } catch (SQLException e) {
+            throw new DaoException();
+        }
     }
 
 	@Override
@@ -81,7 +85,7 @@ public class MembreDaoImpl implements MembreDao {
             statement.setString(3, adresse);
             statement.setString(4, email);
             statement.setString(5, telephone);
-            statement.setString(6, Membre.Abonnement.BASIC.name()); // On donne un abonnement BASIC par défaut
+            statement.setString(6, null); // On donne un abonnement BASIC par défaut
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
 

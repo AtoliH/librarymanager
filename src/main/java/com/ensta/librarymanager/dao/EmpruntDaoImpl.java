@@ -26,7 +26,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 
     private static EmpruntDaoImpl instance;
 
-    public static EmpruntDaoImpl getInstance() throws SQLException {
+    public static EmpruntDaoImpl getInstance() throws DaoException {
         if (instance == null) {
             instance = new EmpruntDaoImpl();
         }
@@ -34,9 +34,9 @@ public class EmpruntDaoImpl implements EmpruntDao {
     }
 
     private final String FIND_ALL = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idEmprunt, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt ORDER BY dateRetour DESC";
-    private final String FIND_CURRENT = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLibre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt WHERE dateRetour IS NULL";
+    private final String FIND_CURRENT = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt WHERE dateRetour IS NULL";
     private final String FIND_CURRENT_BY_MEMBRE = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idEmprunt, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIn membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt WHERE dateRetour IS NULL AND membre.id = ?";
-    private final String FIND_CURRENT_BY_LIVRE = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLibre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt WHERE dateRetour IS NULL AND emprunt.id = ?";
+    private final String FIND_CURRENT_BY_LIVRE = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email, telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt WHERE dateRetour IS NULL AND emprunt.id = ?";
     private final String FIND_BY_ID = "SELECT e.id AS idEmprunt, idMembre, nom, prenom, adresse, email, telephone, abonnement, idEmprunt, titre, auteur, isbn, dateEmprunt, dateRetour FROM emprunt as e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN emprunt ON emprunt.id = e.idEmprunt WHERE e.id = ?";
     private final String CREATE = "INSERT INTO emprunt(idMembre, idEmprunt, dateEmprunt, dateRetour) VALUES(?,?,?,?)";
     private final String UPDATE = "UPDATE emprunt SET idMembre = ?, idEmprunt = ?, dateEmprunt = ?, dateRetour = ? WHERE id = ?";
@@ -44,8 +44,12 @@ public class EmpruntDaoImpl implements EmpruntDao {
 
     private Connection connexion;
 
-    private EmpruntDaoImpl() throws SQLException {
-        connexion = ConnectionManager.getConnection();
+    private EmpruntDaoImpl() throws DaoException {
+        try {
+            connexion = ConnectionManager.getConnection();
+        } catch (SQLException e) {
+            throw new DaoException();
+        }
     }
 
     @Override
@@ -147,9 +151,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
             statement.setInt(1, idMembre);
             statement.setInt(2, idEmprunt);
             statement.setDate(3, Date.valueOf(dateEmprunt));
-
-            int dureePret = 14; // Les livres sont prêtés pour une durée maximale de 14 jours
-            statement.setDate(4, Date.valueOf(dateEmprunt.plusDays(dureePret)));
+            statement.setDate(4, null);
 
             statement.executeUpdate();
         } catch (SQLException throwables) {

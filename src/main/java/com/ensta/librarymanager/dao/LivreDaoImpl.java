@@ -16,7 +16,7 @@ public class LivreDaoImpl implements LivreDao {
 
     private static LivreDaoImpl instance;
 
-    public static LivreDaoImpl getInstance() throws SQLException {
+    public static LivreDaoImpl getInstance() throws DaoException {
         if (instance == null) {
             instance = new LivreDaoImpl();
         }
@@ -32,8 +32,12 @@ public class LivreDaoImpl implements LivreDao {
 
     private Connection connexion;
     
-    private LivreDaoImpl() throws SQLException {
-        connexion = ConnectionManager.getConnection();
+    private LivreDaoImpl() throws DaoException {
+        try {
+            connexion = ConnectionManager.getConnection();
+        } catch (SQLException e) {
+            throw new DaoException();
+        }
     }
 
 	@Override
