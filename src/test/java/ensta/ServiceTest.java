@@ -7,6 +7,6 @@ import org.junit.Test;
 /**
  * Test unitaires pour les modeles
  */
-public class ModeleTest
+public class ServiceTest
 {
 }

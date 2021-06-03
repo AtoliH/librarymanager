@@ -4,8 +4,8 @@ public class Membre {
     public enum Abonnement {
         BASIC,
         PREMIUM,
-        VIP
-    }
+        VIP;
+    };
     
     private int id;
     private String nom;
